@@ -20,7 +20,7 @@ When you have finished using it, you can run ```deactivate``` to exit the virtua
 1. Follow the previous installation steps.
 2. Go at the root of the project (.../openclassrooms_project_9/).
 3. Activate the virtual environment.
-4. Run ```python manage.py runserver```.
+4. Run ```python litreview/manage.py runserver```.
 5. You can now consult the application with your web browser at [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 # [FR] OpenClassrooms - Projet 9 : LITReview
@@ -45,5 +45,5 @@ Quand vous avez fini de l'utiliser, vous pouvez désactiver l'environnement virt
 1. Suivez les étapes d'installation.
 2. Allez à la racine du projet (.../openclassrooms_project_9/).
 3. Activez l'environnement virtuel.
-4. Lancez la commande ```python manage.py runserver```.
+4. Lancez la commande ```python litreview/manage.py runserver```.
 5. Vous pouvez maintenant consulter l'application depuis votre navigateur internet à l'adresse [http://127.0.0.1:8000](http://127.0.0.1:8000).
