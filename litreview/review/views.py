@@ -8,7 +8,6 @@ def sign_up(request):
     if request.method == 'POST':
         username = request.POST.get("username")
         password = request.POST.get("password")
-        # pass
     return render(request, "review/base.html", {"connected": False, "content": "Feed page"})
 
 
@@ -23,24 +22,28 @@ def login(request):
 
 
 def feed(request):
-    return render(request, "litreview/base.html", {"connected": True, "content": "Feed page"})
+    return render(request, "review/base.html", {"connected": True, "content": "Feed page"})
 
 
 def follow(request):
-    pass
+    return render(request, "review/base.html", {"connected": False, "content": "Follow page"})
 
 
 def ticket_creation(request):
-    pass
+    return render(request, "review/base.html", {"connected": False, "content": "Ticket creation page"})
 
 
-def ticket_modification(request):
-    pass
+def ticket_modification(request, ticket_id):
+    return render(request, "review/base.html", {"connected": False, "content": f"Ticket {ticket_id} modification page"})
 
 
 def review_creation(request):
-    pass
+    return render(request, "review/base.html", {"connected": False, "content": "Review creation page"})
 
 
-def review_modification(request):
-    pass
+def review_modification(request, review_id):
+    return render(request, "review/base.html", {"connected": False, "content": f"Review {review_id} modification page"})
+
+
+def posts(request):
+    return render(request, "review/base.html", {"connected": False, "content": "Posts page"})
