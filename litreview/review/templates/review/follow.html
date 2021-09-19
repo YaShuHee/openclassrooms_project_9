@@ -5,4 +5,34 @@ Abonnements - LITReview
 {% endblock %}
 
 {% block content %}
+<section>
+<h2>Suivre d'autres utilisateurs</h2>
+<form action="{% url 'follow' %}" method="get">
+    {{ form.query }}
+    <input type="submit" value="Suivre">
+</form>
+</section>
+<section>
+<h2>Abonnements</h2>
+    <table>
+    {% for link in followed %}
+        <tr>
+            <td>{{ link.followed_user.username }}</td>
+            <td><a href="{% url 'follow' %}?unfollow={{link.id}}">Se désabonner</a></td>
+        </tr>
+    {% empty %}
+        <tr>Vous ne suivez aucun utilisateur.</tr>
+    {% endfor %}
+    </table>
+</section>
+<section>
+<h2>Abonnés</h2>
+<table>
+    {% for link in followers %}
+        <tr>{{ link.user.username }}</tr>
+    {% empty %}
+        <tr>Aucun utilisateur ne vous suit.</tr>
+    {% endfor %}
+</table>
+</section>
 {% endblock %}

@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from .models import UserFollows, Ticket, Review
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from .forms import FollowForm
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # Create your views here.
@@ -22,7 +25,7 @@ def log_in(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            user = authenticate(username = form.cleaned_data["username"], password = form.cleaned_data["password"])
+            user = authenticate(username=form.cleaned_data["username"], password=form.cleaned_data["password"])
             if user is not None:
                 login(request, user)
             return redirect("/feed/")
@@ -38,7 +41,26 @@ def feed(request):
 
 @login_required(redirect_field_name=None)
 def follow(request):
-    return render(request, "review/base.html", {})
+    form = FollowForm()
+    user = request.user
+    if "unfollow" in request.GET:
+        try:
+            link = UserFollows.objects.get(id=request.GET.get("unfollow"))
+            link.delete()
+        except ObjectDoesNotExist:
+            pass
+    if "query" in request.GET:
+        username = request.GET.get("query")
+        try:
+            to_follow = User.objects.get(username__iexact=username)
+            if to_follow.id != user.id:
+                follow_link = UserFollows(user=user, followed_user=to_follow)
+                follow_link.save()
+        except ObjectDoesNotExist:
+            pass
+    followers = UserFollows.objects.filter(followed_user=user)
+    followed = UserFollows.objects.filter(user=user)
+    return render(request, "review/follow.html", {"form": form, "followers": followers, "followed": followed})
 
 
 @login_required(redirect_field_name=None)
