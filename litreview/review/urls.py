@@ -29,7 +29,4 @@ urlpatterns = [
     path('review/<int:review_id>/', views.review_modification, name="review_creation"),
     path('posts/', views.posts, name="posts"),
     path('logout/', views.log_out, name="log_out"),
-
-
-    path('test-login/', include('django.contrib.auth.urls')),
 ]
