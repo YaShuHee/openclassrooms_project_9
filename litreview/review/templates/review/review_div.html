@@ -1,0 +1,12 @@
+{% load custom_filters %}
+<div style="border: solid 1px black; padding: 10px; margin: 10px;">
+    <p>{{ review.user.username }} a posté une critique</p>
+    <p>{{ review.time_created }}</p>
+    <h3>{{ review.headline }} - {{ review.rating|to_stars }}</h3>
+    <p>{{ review.body }}</p>
+    {% if review.user != user %}
+        {% include './ticket_div.html' with ticket=review.ticket reviewed=False %}
+    {% else %}
+        {% include './ticket_div.html' with ticket=review.ticket reviewed=True %}
+    {% endif %}
+</div>

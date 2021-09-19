@@ -5,4 +5,17 @@ Flux - LITReview
 {% endblock %}
 
 {% block content %}
+<a href="{% url 'ticket_creation' %}">Demander une critique</a>
+<a href="{% url 'review_creation' %}">Créer une critique</a>
+<div>
+    {% for post in tickets_and_reviews %}
+        {% if post.is_a_review %}
+            {% include './review_div.html' with review=post %}
+        {% else %}
+            {% include './ticket_div.html' with ticket=post %}
+        {% endif %}
+    {% empty %}
+        <p>Votre flux est vide.</p>
+    {% endfor %}
+</div>
 {% endblock %}

@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .forms import FollowForm
 from django.core.exceptions import ObjectDoesNotExist
+from itertools import chain
 
 
 # Create your views here.
@@ -36,7 +37,12 @@ def log_in(request):
 
 @login_required(redirect_field_name=None)
 def feed(request):
-    return render(request, "review/base.html", {})
+    users = [link.followed_user for link in UserFollows.objects.filter(user=request.user)]
+    users.append(request.user)
+    tickets = Ticket.objects.filter(user__in=users)
+    reviews = Review.objects.filter(user__in=users)
+    tickets_and_reviews = sorted(chain(tickets, reviews), key=lambda i: i.time_created, reverse=True)
+    return render(request, "review/feed.html", {"tickets_and_reviews": tickets_and_reviews})
 
 
 @login_required(redirect_field_name=None)
