@@ -1,11 +1,11 @@
 {% load static %}
 <div style="border: solid 1px black; padding: 10px; margin: 10px;">
     <p>{{ ticket.user.username }} a demandé une critique</p>
-    <p>{{ ticket.time_created }}</p>
+    <p>{{ ticket.time_created|date:"H:i, j F Y" }}</p>
     <h3>{{ ticket.title }}</h3>
     <p>{{ ticket.description }}</p>
     {% if ticket.image %}
-        <img src="{{ ticket.image.url }}" alt="couverture {{ ticket.title }}">
+        <img src="{{ ticket.image.url }}" alt="Image de {{ ticket.title }}">
     {% endif %}
     {% if not post_page and not reviewed %}
         <a href="{% url 'review_creation' ticket_id=ticket.id %}">Créer une critique</a>

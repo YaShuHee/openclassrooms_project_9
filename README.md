@@ -20,8 +20,12 @@ When you have finished using it, you can run ```deactivate``` to exit the virtua
 1. Follow the previous installation steps.
 2. Go at the root of the project (.../openclassrooms_project_9/).
 3. Activate the virtual environment.
-4. Run ```python litreview/manage.py runserver```.
-5. You can now consult the application with your web browser at [http://127.0.0.1:8000](http://127.0.0.1:8000).
+4. Run ```python ./manage.py makemigrations```
+5. Run ```python ./manage.py migrate```
+6. Run ```python ./manage.py runserver```.
+7. You can now consult the application with your web browser at [http://127.0.0.1:8000](http://127.0.0.1:8000) or [http://localhost:8000](http://localhost:8000).
+8. To test the application, you must now create a local account with a username and a password, or you can use one of the 3 already created accounts.
+Their username are respectively "Jean", "Mahault" and "Timothé". They all have "test12345" as password.
 
 # [FR] OpenClassrooms - Projet 9 : LITReview
 Une application pour demander et poster des critiques de livres.
@@ -45,5 +49,9 @@ Quand vous avez fini de l'utiliser, vous pouvez désactiver l'environnement virt
 1. Suivez les étapes d'installation.
 2. Allez à la racine du projet (.../openclassrooms_project_9/).
 3. Activez l'environnement virtuel.
-4. Lancez la commande ```python litreview/manage.py runserver```.
-5. Vous pouvez maintenant consulter l'application depuis votre navigateur internet à l'adresse [http://127.0.0.1:8000](http://127.0.0.1:8000).
+4. Lancez la commande ```python ./manage.py makemigrations```.
+5. Lancez la commande ```python ./manage.py migrate```.
+6. Lancez la commande ```python ./manage.py runserver```.
+7. Vous pouvez maintenant consulter l'application depuis votre navigateur internet à l'adresse [http://127.0.0.1:8000](http://127.0.0.1:8000) ou [http://localhost:8000](http://localhost:8000).
+8. Pour tester l'application, vous devez maintenant créer un compte local avec un identifiant et un mot de passe, ou vous pouvez utiliser l'un des trois comptes déjà créés.
+Leur identifiant respectif sont "Jean", "Mahault" et "Timothé". Ils ont tous "test12345" comme mot de passe.
