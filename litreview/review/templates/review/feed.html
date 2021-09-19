@@ -6,7 +6,7 @@ Flux - LITReview
 
 {% block content %}
 <a href="{% url 'ticket_creation' %}">Demander une critique</a>
-<a href="{% url 'review_creation' %}">Créer une critique</a>
+<a href="{% url 'ticket_and_review_creation' %}">Créer une critique</a>
 <div>
     {% for post in tickets_and_reviews %}
         {% if post.is_a_review %}

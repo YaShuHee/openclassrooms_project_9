@@ -5,4 +5,11 @@ Création de ticket - LITReview
 {% endblock %}
 
 {% block content %}
+<section>
+    <h2>Créer un ticket</h2>
+    <form enctype="multipart/form-data" action="{% url 'ticket_creation' %}" method="post">{% csrf_token %}
+        {{ form }}
+        <input type="submit">
+    </form>
+</section>
 {% endblock %}

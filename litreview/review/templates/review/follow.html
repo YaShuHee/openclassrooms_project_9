@@ -29,9 +29,9 @@ Abonnements - LITReview
 <h2>Abonnés</h2>
 <table>
     {% for link in followers %}
-        <tr>{{ link.user.username }}</tr>
+        <tr><td>{{ link.user.username }}</td></tr>
     {% empty %}
-        <tr>Aucun utilisateur ne vous suit.</tr>
+        <tr><td>Aucun utilisateur ne vous suit.</td></tr>
     {% endfor %}
 </table>
 </section>

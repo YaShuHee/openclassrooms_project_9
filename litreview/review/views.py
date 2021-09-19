@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .models import UserFollows, Ticket, Review
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .forms import FollowForm
+from .forms import FollowForm, NewTicketForm, NewReviewForm, NewTicketAndReviewForm
 from django.core.exceptions import ObjectDoesNotExist
 from itertools import chain
 
@@ -23,6 +23,8 @@ def sign_up(request):
 
 
 def log_in(request):
+    if request.user.is_authenticated:
+        return redirect("/feed/")
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -71,7 +73,17 @@ def follow(request):
 
 @login_required(redirect_field_name=None)
 def ticket_creation(request):
-    return render(request, "review/base.html", {})
+    form = NewTicketForm()
+    if request.method == "POST":
+        form = NewTicketForm(request.POST, request.FILES)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            description = form.cleaned_data["description"]
+            image = form.cleaned_data["image"]
+            ticket = Ticket(title=title, description=description, user=request.user, image=image)
+            ticket.save()
+            return redirect("/feed/")
+    return render(request, "review/ticket_creation.html", {"form": form})
 
 
 @login_required(redirect_field_name=None)
@@ -85,8 +97,47 @@ def ticket_deletion(request, ticket_id):
 
 
 @login_required(redirect_field_name=None)
-def review_creation(request):
-    return render(request, "review/base.html", {})
+def review_creation(request, ticket_id):
+    try:
+        ticket = Ticket.objects.get(id=ticket_id)
+    except ObjectDoesNotExist:
+        return redirect("/feed/")
+    form = NewReviewForm()
+    if request.method == "POST":
+        form = NewReviewForm(request.POST)
+        if form.is_valid():
+            headline = form.cleaned_data["headline"]
+            rating = form.cleaned_data["rating"]
+            body = form.cleaned_data["body"]
+            review = Review(user=request.user, ticket=ticket, headline=headline, rating=rating, body=body)
+            review.save()
+            return redirect("/feed/")
+    return render(request, "review/review_creation.html", {"form": form, "ticket": ticket})
+
+
+@login_required(redirect_field_name=None)
+def ticket_and_review_creation(request):
+    form = NewTicketAndReviewForm()
+    if request.method == "POST":
+        form = NewTicketAndReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            description = form.cleaned_data["description"]
+            image = form.cleaned_data["image"]
+            ticket = Ticket(user=request.user, title=title, description=description, image=image)
+            ticket.save()
+            headline = form.cleaned_data["headline"]
+            rating = form.cleaned_data["rating"]
+            body = form.cleaned_data["body"]
+            review = Review(user=request.user, ticket=ticket, headline=headline, rating=rating, body=body)
+            review.save()
+            return redirect("/feed/")
+    return render(request, "review/ticket_and_review_creation.html", {"form": form})
+
+
+
+
+
 
 
 @login_required(redirect_field_name=None)

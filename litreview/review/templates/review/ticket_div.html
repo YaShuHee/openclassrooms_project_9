@@ -5,10 +5,10 @@
     <h3>{{ ticket.title }}</h3>
     <p>{{ ticket.description }}</p>
     {% if ticket.image %}
-        <img src="{% static ticket.image.path %}" alt="couverture {{ ticket.title }}">
+        <img src="{{ ticket.image.url }}" alt="couverture {{ ticket.title }}">
     {% endif %}
     {% if not post_page and not reviewed %}
-        <a href="{% url 'review_creation' %}">Créer une critique</a>
+        <a href="{% url 'review_creation' ticket_id=ticket.id %}">Créer une critique</a>
     {% elif post_page and not reviewed %}
         <a href="{% url 'ticket_modification' ticket_id=ticket.id %}">Modifier</a>
         <a href="{% url 'ticket_deletion' ticket_id=ticket.id %}">Supprimer</a>
