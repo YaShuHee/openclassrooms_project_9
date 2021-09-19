@@ -1,0 +1,20 @@
+{% extends "review/base.html" %}
+
+{% block title %}
+Inscription - LITReview
+{% endblock %}
+
+{% block content %}
+<h2>Inscrivez-vous</h2>
+<form action="{% url 'sign_up' %}" method="post">{% csrf_token %}
+    {{ form.errors }}
+    <label for="{{ form.username.id_for_label }}">Nom d'utilisateur</label>
+    {{ form.username }}
+    <label for="{{ form.password1.id_for_label }}">Mot de passe</label>
+    {{ form.password1 }}
+    <label for="{{ form.password2.id_for_label }}">Confirmation mot de passe</label>
+    {{ form.password2 }}
+    <a href="{% url 'log_in' %}">Retour</a>
+    <input type="submit" value="S'inscrire"/>
+</form>
+{% endblock %}

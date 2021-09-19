@@ -2,22 +2,25 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>LITReview</title>
+    <title>{% block title %}LITReview{% endblock %}</title>
 </head>
 <body>
     <header>
         <h1>LITReview</h1>
-        {% if connected %}
+        {% if user.is_authenticated %}
+        <nav>
             <ul>
-                <li><a href="flux">Flux</a></li>
-                <li><a href="posts">Posts</a></li>
-                <li><a href="follow">Abonnements</a></li>
-                <li><a href="disconnect">Se déconnecter</a></li>
+                <li><a href="{% url 'feed'%}">Flux</a></li>
+                <li><a href="{% url 'posts'%}">Posts</a></li>
+                <li><a href="{% url 'follow'%}">Abonnements</a></li>
+                <li><a href="{% url 'log_off'%}">Se déconnecter</a></li>
             </ul>
+        </nav>
         {% endif %}
     </header>
     <div class="main-container">
-        {{ content }}
+        {% block content%}
+        {% endblock %}
     </div>
 </body>
 </html>

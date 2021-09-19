@@ -1,0 +1,25 @@
+{% extends "review/base.html" %}
+
+{% block title %}
+Connexion - LITReview
+{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Inscrivez-vous maintenenant</h2>
+    <form action="{% url 'sign_up' %}" method="POST">{% csrf_token %}
+    {# using post method for this form, to avoid extra "?" mark in url #}
+        <input type="submit" value="S'inscrire"/>
+    </form>
+</section>
+<section>
+    <h2>Connectez-vous</h2>
+    <form action="{% url 'log_in' %}" method="POST">{% csrf_token %}
+        <label for="{{ form.username.id_for_label }}">Nom d'utilisateur</label>
+        {{ form.username }}
+        <label for="{{ form.password.id_for_label }}">Mot de passe</label>
+        {{ form.password }}
+        <input type="submit" value="Se connecter"/>
+    </form>
+</section>
+{% endblock %}
