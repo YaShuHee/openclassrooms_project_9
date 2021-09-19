@@ -8,5 +8,9 @@
         {% include './ticket_div.html' with ticket=review.ticket reviewed=False %}
     {% else %}
         {% include './ticket_div.html' with ticket=review.ticket reviewed=True %}
+        {% if post_page %}
+            <a href="{% url 'review_modification' review_id=review.id %}">Modifier</a>
+            <a href="{% url 'review_deletion' review_id=review.id %}">Supprimer</a>
+        {% endif %}
     {% endif %}
 </div>

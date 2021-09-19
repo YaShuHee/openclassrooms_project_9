@@ -80,6 +80,11 @@ def ticket_modification(request, ticket_id):
 
 
 @login_required(redirect_field_name=None)
+def ticket_deletion(request, ticket_id):
+    return render(request, "review/base.html", {})
+
+
+@login_required(redirect_field_name=None)
 def review_creation(request):
     return render(request, "review/base.html", {})
 
@@ -90,8 +95,16 @@ def review_modification(request, review_id):
 
 
 @login_required(redirect_field_name=None)
-def posts(request):
+def review_deletion(request, review_id):
     return render(request, "review/base.html", {})
+
+
+@login_required(redirect_field_name=None)
+def posts(request):
+    tickets = Ticket.objects.filter(user=request.user)
+    reviews = Review.objects.filter(user=request.user)
+    posts = sorted(chain(tickets, reviews), key=lambda i: i.time_created, reverse=True)
+    return render(request, "review/posts.html", {"posts": posts})
 
 
 @login_required(redirect_field_name=None)

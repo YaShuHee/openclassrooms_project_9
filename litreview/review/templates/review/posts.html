@@ -1,8 +1,19 @@
 {% extends "review/base.html" %}
 
 {% block title %}
-Mes postes - LITReview
+Vos posts - LITReview
 {% endblock %}
 
 {% block content %}
+<div>
+    {% for post in posts %}
+        {% if post.is_a_review %}
+            {% include './review_div.html' with review=post post_page=True %}
+        {% else %}
+            {% include './ticket_div.html' with ticket=post post_page=True %}
+        {% endif %}
+    {% empty %}
+        <p>Vous n'avez rien posté pour le moment.</p>
+    {% endfor %}
+</div>
 {% endblock %}
