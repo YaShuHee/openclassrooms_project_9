@@ -93,7 +93,15 @@ def ticket_modification(request, ticket_id):
 
 @login_required(redirect_field_name=None)
 def ticket_deletion(request, ticket_id):
-    return render(request, "review/base.html", {})
+    try:
+        ticket = Ticket.objects.get(id=ticket_id)
+    except ObjectDoesNotExist:
+        return redirect("/posts/")
+    if request.method == "POST":
+        if ticket.user == request.user:
+            ticket.delete()
+        return redirect("/posts/")
+    return render(request, "review/ticket_deletion.html", {"ticket": ticket})
 
 
 @login_required(redirect_field_name=None)
@@ -135,11 +143,6 @@ def ticket_and_review_creation(request):
     return render(request, "review/ticket_and_review_creation.html", {"form": form})
 
 
-
-
-
-
-
 @login_required(redirect_field_name=None)
 def review_modification(request, review_id):
     return render(request, "review/base.html", {})
@@ -147,7 +150,15 @@ def review_modification(request, review_id):
 
 @login_required(redirect_field_name=None)
 def review_deletion(request, review_id):
-    return render(request, "review/base.html", {})
+    try:
+        review = Review.objects.get(id=review_id)
+    except ObjectDoesNotExist:
+        return redirect("/posts/")
+    if request.method == "POST":
+        if review.user == request.user:
+            review.delete()
+        return redirect("/posts/")
+    return render(request, "review/review_deletion.html", {"review": review})
 
 
 @login_required(redirect_field_name=None)

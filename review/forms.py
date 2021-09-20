@@ -46,3 +46,12 @@ class NewReviewForm(forms.Form):
     )))
     body = forms.CharField(max_length=8192, widget=forms.Textarea)
 
+
+class UpdateTicketForm(ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ["description", "image"]
+        widget = {
+            "description": forms.Textarea(),
+            "image": forms.ImageField(),
+        }

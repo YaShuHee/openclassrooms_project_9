@@ -1,0 +1,16 @@
+{% extends "review/base.html" %}
+
+{% block title %}
+Suppression de critique - LITReview
+{% endblock %}
+
+{% block content %}
+    {% include './ticket_div.html' with ticket=ticket %}
+    <section>
+        <h2>Voulez-vous supprimer votre demande ?</h2>
+        <form action="{% url 'ticket_deletion' ticket.id %}" method="post">{% csrf_token %}
+            <a href="{% url 'posts' %}">Non</a>
+            <input type="submit" value="Oui">
+        </form>
+    </section>
+{% endblock %}
