@@ -55,3 +55,16 @@ class UpdateTicketForm(ModelForm):
             "description": forms.Textarea(),
             "image": forms.ImageField(),
         }
+
+
+class UpdateReviewForm(forms.Form):
+    headline = forms.CharField(max_length=128, widget=forms.TextInput)
+    rating = forms.IntegerField(min_value=0, max_value=5, widget=forms.RadioSelect(choices=(
+        (0, "0"),
+        (1, "1"),
+        (2, "2"),
+        (3, "3"),
+        (4, "4"),
+        (5, "5"),
+    )))
+    body = forms.CharField(max_length=8192, widget=forms.Textarea)

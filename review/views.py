@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .models import UserFollows, Ticket, Review
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .forms import FollowForm, NewTicketForm, NewReviewForm, NewTicketAndReviewForm
+from .forms import FollowForm, NewTicketForm, NewReviewForm, NewTicketAndReviewForm, UpdateTicketForm, UpdateReviewForm
 from django.core.exceptions import ObjectDoesNotExist
 from itertools import chain
 
@@ -88,7 +88,19 @@ def ticket_creation(request):
 
 @login_required(redirect_field_name=None)
 def ticket_modification(request, ticket_id):
-    return render(request, "review/base.html", {})
+    try:
+        ticket = Ticket.objects.get(id=ticket_id)
+    except ObjectDoesNotExist:
+        return redirect("/posts/")
+    form = UpdateTicketForm()
+    if request.method == "POST":
+        form = UpdateTicketForm(request.POST, request.FILES)
+        if form.is_valid():
+            ticket.description = form.cleaned_data["description"]
+            ticket.image = form.cleaned_data["image"]
+            ticket.save()
+            return redirect("/posts/")
+    return render(request, "review/ticket_modification.html", {"form": form, "ticket": ticket})
 
 
 @login_required(redirect_field_name=None)
@@ -145,7 +157,21 @@ def ticket_and_review_creation(request):
 
 @login_required(redirect_field_name=None)
 def review_modification(request, review_id):
-    return render(request, "review/base.html", {})
+    try:
+        review = Review.objects.get(id=review_id)
+        ticket = review.ticket
+    except ObjectDoesNotExist:
+        return redirect("/posts/")
+    form = UpdateReviewForm()
+    if request.method == "POST":
+        form = UpdateReviewForm(request.POST)
+        if form.is_valid():
+            review.headline = form.cleaned_data["headline"]
+            review.rating = form.cleaned_data["rating"]
+            review.body = form.cleaned_data["body"]
+            review.save()
+            return redirect("/posts/")
+    return render(request, "review/review_modification.html", {"form": form, "review": review, "ticket": ticket})
 
 
 @login_required(redirect_field_name=None)

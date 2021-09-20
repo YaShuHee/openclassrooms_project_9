@@ -5,4 +5,12 @@ Modification de critique - LITReview
 {% endblock %}
 
 {% block content %}
+    {% include './ticket_div.html' with ticket=ticket %}
+    <section>
+        <h2>Modifier une critique</h2>
+        <form action="{% url 'review_modification' review.id %}" method="post">{% csrf_token %}
+            {{ form }}
+            <input type="submit">
+        </form>
+    </section>
 {% endblock %}

@@ -5,4 +5,12 @@ Modification de ticket - LITReview
 {% endblock %}
 
 {% block content %}
+<section>
+    <h2>Modifier un ticket</h2>
+    <form enctype="multipart/form-data" action="{% url 'ticket_modification' ticket.id%}" method="post">{% csrf_token %}
+        <p>{{ ticket.title }}</p>
+        {{ form }}
+        <input type="submit">
+    </form>
+</section>
 {% endblock %}
