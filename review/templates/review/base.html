@@ -1,12 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}LITReview{% endblock %}</title>
-    <style>
-        .filled-stars{color: darkorange}
-        .empty-stars{color: rgba(200, 200, 200, 0.7);}
-    </style>
+    <link href="{% static 'review/style.css' %}" rel="stylesheet">
 </head>
 <body>
     <header>
